@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Envoyer reponses</h1>
+    <ul>
+        {% for question, answer, is_correct in correct_answers %}
+            <li>
+                <strong>{{ question }}:</strong> {{ answer }} - 
+                {% if is_correct %}
+                    <span class="text-success">Correct</span>
+                {% else %}
+                    <span class="text-danger">Incorrect</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+<p>
+    <a class="btn btn-primary" href="{% url 'student_course' course_name slug %}"> revenir au cour</a>
+</p>
+</div>
+   
+{% endblock %}
+
+

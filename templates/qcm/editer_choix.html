@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ formset.management_form }}
+    <div class="formset">
+        {% for form in formset %}
+            <div class="form-group">
+                {{ form.text.label_tag }} {{ form.text }}
+                {{ form.is_correct.label_tag }} {{ form.is_correct }}
+                {{ form.DELETE.label_tag }} {{ form.DELETE }}
+            </div>
+        {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a href="{% url 'professor' %}" class="btn btn-sm btn-success mt-3">Revenir au Cour</a>
+</form>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+

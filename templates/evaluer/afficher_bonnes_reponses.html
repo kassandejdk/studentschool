@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <h1 class="mt-4">Vos reponses</h1>
+    <ul class="list-group mt-3">
+        {% for question, answer, is_correct in correct_answers %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><strong>{{ question }}:</strong> {{ answer }}</span>
+                {% if is_correct %}
+                    <span class="badge badge-success">Correct</span>
+                {% else %}
+                    <span class="badge badge-danger">Incorrect</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="mt-4">
+        <h3>Score: {{ score }} / {{ total_questions }}</h3>
+        <h3>Grade: {{ grade }} / 20</h3>
+    </div>
+</div>
+
+<div class="container">
+    <h1 class="mt-4">Bonnes Réponses</h1>
+    <ul class="list-group mt-3">
+        {% for question, correct_answer in bonnes_reponses %}
+            <li class="list-group-item">
+                <strong>{{ question }}:</strong> {{ correct_answer }}
+            </li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="{% url 'student_course' course_name slug%}" class="btn btn-primary">Revenir au Cour</a>
+        <a class="btn btn-primary" href="{% url 'suivre'  course_id %}">Voir la progression</a>
+    </p>
+</div>
+
+
+{% endblock %}
+
+
+
+

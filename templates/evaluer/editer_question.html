@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="mt-4">Editer Question</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <a href="{% url 'professor' %}" class="btn btn-primary">Revenir au Cour</a>
+    </form>
+</div>
+   
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

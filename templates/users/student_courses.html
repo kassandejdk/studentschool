@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <link href="{% static 'css/sidebar.css' %}" rel="stylesheet"/>
+  {% include 'breadcrumb.html' %}
+
+  <div class="container student-course">
+    <div class="row">
+      <div class="col-md-2">
+        {% if chapter_list %}
+
+          <ul class="sidebar-nav">
+            <li>
+              {% for instance in chapter_list %}
+                <a class="a-target" href="{% url 'student_course' course_name instance.slug %}">
+                  {{ instance.chapter_name }}
+                </a>
+              {% endfor %}
+            </li>
+          </ul>
+
+        {% endif %}
+      </div>
+
+      <div class="col-md-10">
+        {% if result_list %}
+          {% for item in result_list %}
+            {% if item.video %}
+                <div class="course-inner-content video">
+                  {% if  request.user.is_professor == True or request.user.is_site_admin == True %}
+                  <video width="640" height="360" src="{{ item.video.url }}" controls frameborder="0" allowfullscreen>
+                     <source src="{{ item.video.url }}" type="video/*" \>
+                  </video>
+                  {% endif %}
+                  {% if request.user.paiement == "PRENIUM" and request.user.is_professor == False and request.user.is_site_admin == False %}
+                    <video width="640" height="360" src="{{ item.video.url }}" controls frameborder="0" allowfullscreen>
+                      <source src="{{ item.video.url }}" type="video/*" \>
+                    </video>
+                 {% elif request.user.is_professor == False and request.user.is_site_admin == False and request.user.paiement == "STANDART" %}
+                 <strong><a href="{% url 'Paiement' 150 %}">Passer a la version PRENIUM pour, lire les videos et Telecharger les documents</a></strong>
+                 {% endif %}
+                </div>
+            {% elif item.lesson %}
+              <div class="course-inner-content">
+                {{ item.lesson|safe }}
+              </div>
+              {% else %}
+              <div class="course-inner-content" style="display: flex;justify-content: space-between;">
+                <a href='{{ item.file.url }}'>{{ item.file }}</a>
+                {% if request.user.paiement == "PRENIUM" or request.user.is_professor == True or request.user.is_site_admin == True %}
+                <button>
+                  <a href="{{ item.file.url }}" download="{{ item.file }}">DOWNLOAD</a>
+                </button>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+          
+        {% endif %}
+      </div>
+    </div>
+    <div class="eval mt-5">
+      <h4>Exercez-Vous</h4>
+      <div class="question d-flex justify-content-between">
+        <a href="{% url 'verifier_reponse' course_id slug %}" class="btn btn-primary">Question-Réponse</a>
+        <a href="{% url 'verifier_choix' course_id slug %}" class="btn btn-primary">QCM</a>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      /* Make left-border same height as parent */
+      var rightColumn = $(".col-md-10");
+      var parentHeight = rightColumn.parent().height();
+      rightColumn.css("height", parentHeight);
+
+      /* Add active class on chapter change */
+      var pathname = window.location.pathname;
+      pathname = pathname.substring(0, pathname.length - 1);
+      $('.sidebar-nav > li a[href="' + pathname + '"]').addClass('active-sidebar');
+    });
+  </script>
+
+{% endblock %}

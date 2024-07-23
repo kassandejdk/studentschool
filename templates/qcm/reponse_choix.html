@@ -1,0 +1,33 @@
+
+
+{% extends "base.html" %}
+{% block content %}
+   <form style="text-align: center;" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ field.label }}</h5>
+                        <div class="form-group">
+                            {% for choice in field %}
+                                <div class="form-check">
+                                    {{ choice.tag }}
+                                    <label class="form-check-label" for="{{ choice.id_for_label }}">
+                                        {{ choice.choice_label }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <button type="submit" class="btn btn-primary">Envoyer vos Reponse</button>
+                <a  class="btn btn-primary" href="{% url 'student_course' course_name slug %}"> revenir au cour</a>
+            </div>
+            
+        </form>
+{% endblock %}
+
+

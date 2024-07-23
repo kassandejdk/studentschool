@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div style='text-align:center'>
+<p class='lead'>{% trans "You are now registered. Activation email sent." %}</p>
+</div>
+
+<div class='col-xs-12 col-sm-4 col-sm-offset-4 registration'>
+    
+    <form method="post" action=".">
+      {% csrf_token %}
+      {{ form|crispy }}
+      {%if erreur%}
+      <p style="color: red;font-size: 0.8rem;">{{message}}</p>
+      {% endif %}
+      <input class='btn btn-block btn-primary' type="submit" value="{% trans 'Join' %}"/>
+    </form>
+  </div>
+{% endblock %}

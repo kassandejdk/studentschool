@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+  <!-- Professor core css -->
+  <link href="{% static 'css/professor.css' %}" rel="stylesheet"/>
+  {% include 'breadcrumb.html' %}
+
+  <div class="container professor-panel-content">
+    <div class="row">
+      <div class="col-md-4">
+        <form method='POST' action=''>
+          {% csrf_token %}
+          {{ add_course_form|crispy }}
+          <input class='btn btn-primary' type='submit' value='Add course'/>
+        </form>
+      </div>
+
+      <div class="col-md-8">
+        {% if queryset_course %}
+          <table class="table table-condensed table-hover generic-table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Course name</th>
+                <th>Date created</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            {% for instance in queryset_course %}
+              <tr>
+                <td><a href="{% url 'professor_course' instance.course_name %}">{{ instance.course_name }}</a></td>
+                <td>{{ instance.course_created_date }}</td>
+                <td>
+                  <a href="{% url 'edit' instance.course_name %}">
+                    <input class='btn btn-primary btn-sm' type='submit' value='Edit Course'/>
+                  </a>
+                  <a href="{% url 'delete' instance.course_name %}">
+                    <input class='btn btn-danger btn-sm' type='submit' value='Delete Course'/>
+                  </a>
+                  <a href="{% url 'list_students' instance.course_name %}">
+                    <input class='btn btn-info btn-sm' type='submit' value='Edit students'/>
+                  </a>
+                </td>
+              </tr>
+
+              <!-- Section pour les questions à réponse simple -->
+
+              <tr>
+                <td colspan="3">
+                  
+                  <h4>Questions à réponse simple pour {{ instance.course_name }}</h4>
+                  {% for question in instance.questions.all %}
+                      <p>
+                        {{ question.text }} - 
+                        <a href="{% url 'editer_question' question.pk %}">Editer</a> - 
+                        <a href="{% url 'supprimer_question' question.pk %}">Supprimer</a>
+                      </p>
+                  {% endfor %}
+                  <a href="{% url 'ajouter_question' instance.id %}">Ajouter une nouvelle question à réponse simple</a>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <h4>Questions QCM pour {{ instance.course_name }}</h4>
+                  {% for question in instance.choices.all %}
+                      <p>
+                        
+                        {{question.text }} - 
+                        <a href="{% url 'editer_choix' question.pk %}">Editer</a> - 
+                        <a href="{% url 'supprimer_choix' question.pk %}">Supprimer</a>
+                      </p>
+                    <!-- Afficher les choix pour les questions QCM -->
+                    <ul>
+                      {% for choice in question.choices.all %}
+                        <li>{{ choice.text }} {% if choice.is_correct %}(Correct){% endif %}</li>
+                      {% endfor %}
+                    </ul>
+                  {% endfor %}
+                  <a href="{% url 'ajouter_choix' instance.id %}">Ajouter une nouvelle question QCM</a>
+                </td>
+              </tr>
+
+            {% endfor %}
+              <!-- Section pour les questions QCM -->
+            
+            
+          </table>
+        {% else %}
+          <p>Pas D'evaluation.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

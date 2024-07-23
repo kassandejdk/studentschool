@@ -1,0 +1,74 @@
+# views.py
+"""def verifier_reponse(request):
+    questions = Question.objects.all()
+    if request.method == 'POST':
+        form = ReponseForm(request.POST, questions=questions)
+        if form.is_valid():
+            correct_answers = []
+            for question in questions:
+                user_answer = form.cleaned_data[f'question_{question.id}']
+                answer=Answer.objects.create(question=question, text=user_answer)
+                is_correct = user_answer
+                is_correct = user_answer.strip().lower() == question.correct_answer.strip().lower()
+                print(bool(is_correct))
+                if is_correct:
+                    print('bravo')
+                correct_answers.append((question.text, user_answer)) 
+                context = {
+                    'question': question,
+                    'correct_answers': correct_answers,
+                    'answer':answer,
+                    'is_correct':is_correct,
+                }
+               ================================================================================== check.py
+            return render(request, 'verifier_reponse.html', context)
+    else:
+        form = ReponseForm(questions=questions)
+    return render(request, 'reponse_questions.html', {'form': form})"""
+    # views.py
+
+
+
+
+
+
+
+
+    """def verifier_reponse(request):
+    questions = Question.objects.all()
+    if request.method == 'POST':
+        form = ReponseForm(request.POST, questions=questions)
+        if form.is_valid():
+            correct_answers = []
+            for question in questions:
+                user_answer = form.cleaned_data[f'question_{question.id}']
+                answer = Answer.objects.create(question=question, text=user_answer)
+                is_correct = user_answer.strip().lower() == question.correct_answer.strip().lower()
+                correct_answers.append((question.text, user_answer, is_correct))
+
+            context = {
+                'correct_answers': correct_answers
+            }
+            return render(request, 'verifier_reponse.html', context)
+    else:
+        form = ReponseForm(questions=questions)
+    return render(request, 'reponse_questions.html', {'form': form})
+"""
+# views.py
+
+
+
+
+
+"""def reponse_question(request):
+    questions = Question.objects.all()
+    if request.method == 'POST':
+        form = ReponseForm(request.POST, questions=questions)
+        if form.is_valid():
+            for question in questions:
+                answer_text = form.cleaned_data[f'question_{question.id}']
+                Answer.objects.create(question=question, text=answer_text)
+            return redirect('remerciement')
+    else:
+        form = ReponseForm(questions=questions)
+    return render(request, 'reponse_questions.html', {'form': form, 'questions': questions})"""

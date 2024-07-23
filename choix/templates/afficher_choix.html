@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Résultats</h2>
+  <p>Score: {{ score }}/{{ total_questions }}</p>
+  <p>Note: {{ grade }}/20</p>
+  <ul>
+    {% for question, answer, is_correct in correct_answers %}
+      <li>{{ question }} - Votre réponse: {{ answer }} - Correct: {{ is_correct }}</li>
+    {% endfor %}
+  </ul>
+  <h3>Bonnes réponses</h3>
+  <ul>
+    {% for question, correct_answer in bonnes_reponses %}
+      <li>{{ question }} - Bonne réponse: {{ correct_answer }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

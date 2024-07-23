@@ -1,0 +1,23 @@
+
+
+
+
+
+
+
+{% load static %}
+<!-- thank_you.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thank You</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}"
+</head>
+<body>
+    <div class="container">
+        <h1>Thank You!</h1>
+        <p>Your answers have been submitted successfully.</p>
+        <a href="{% url 'remerciement' %}">voir la correct</a>
+    </div>
+</body>
+</html>

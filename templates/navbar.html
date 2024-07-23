@@ -1,0 +1,53 @@
+<!-- Navigation bar -->
+<nav class="navbar" role="navigation">
+  <div class="container-fluid">
+
+    <!-- Logo -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Menu items -->
+    <div class="collapse navbar-collapse" id="mainNavBar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/"><span class="glyphicon glyphicon-home"></span> Acceuil</a></li>
+        
+        {% if request.user.is_authenticated %}
+        {% if request.user.paiement == "PRENIUM" or request.user.paiement == "STANDART"  or request.user.is_professor or request.user.is_site_admin %}
+          <li><a href="{% url 'courses' %}"><span class="glyphicon glyphicon-education"></span> Cours</a></li>
+        {% endif %}
+        {% if request.user.is_professor == False and request.user.is_site_admin == False and request.user.paiement == "AWAIT" %}
+          <li><a href="{% url 'abonnement' %}"><span class="glyphicon glyphicon-education"></span> Payer</a></li>
+        {%endif%}
+        {% else %}
+          <li><a href="/"><span class="glyphicon glyphicon-education"></span> Cours</a></li>
+        {% endif %}
+        <li><a href="{% url 'about' %}"><span class="glyphicon glyphicon-info-sign"></span> Apropos</a></li>
+      </ul>
+
+      <!-- Right align -->
+      <ul class="nav navbar-nav navbar-right">
+          
+          {% if request.user.is_authenticated %}
+            {% if request.user.is_professor or request.user.is_admin %}
+            <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span> {{ request.user.first_name }}  <br> Modifier Cours</a>
+            </li>
+            {% else %}
+            <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span> {{ request.user.first_name }}  <br> Modifier Profil</a>
+            </li>
+            {%endif%}
+            <li><a href="/accounts/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            
+          {% else %}
+            <li><a href="/accounts/register"><span class="glyphicon glyphicon-plus"></span> Sign Up</a></li>
+            <li><a href="/accounts/login"><span class="glyphicon glyphicon-user"></span> Log In</a></li>
+          {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>

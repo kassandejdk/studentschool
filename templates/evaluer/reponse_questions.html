@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Reponse aux Questions</h1>
+    <form style="text-align: center;" method="post">
+        {% csrf_token %}
+        {{ form.as_p }} <br>
+        <button type="submit" class="btn btn-primary">Soumettre</button>
+        <a href="{% url 'student_course' course_name slug %}" class="btn btn-primary">Revenir  Cour</a>
+    </form>
+</div>
+   
+{% endblock %}
+
+

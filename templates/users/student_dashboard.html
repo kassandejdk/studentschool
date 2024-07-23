@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block content %}
+  <!-- Contact core css -->
+  <link href="{% static "css/student_profile.css" %}" rel="stylesheet"/>
+  {% include 'breadcrumb.html' %}
+
+  <div class="container content">
+    <link href="{% static "css/course.css" %}" rel="stylesheet"/>
+    <div class="row">
+      <div class='row login'>
+        <div class='col-sm-4 col-sm-offset-4'>
+          <h1>Modifier vos informations</h1>
+          <form method="post" action=".">
+            {% csrf_token %}
+            {{ form|crispy }}
+  
+            <input class='btn btn-block btn-primary' type="submit" value="Enrigistrer"/>
+            <input type="hidden" name="next" value="{{ next }}"/>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
